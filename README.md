@@ -1,3 +1,3 @@
-Welcome to robo-repo. I'll be storing my source code here. More info soon.
+Just a repo for storing random code stuff that I want to have access to everywhere
 
 -Rob
