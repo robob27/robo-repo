@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Canvas Tamagotchi</title>
+<link rel='stylesheet' type='text/css' href='css/main.css'>
+<script src='http://code.jquery.com/jquery-1.9.1.min.js'></script>
+<script src='js/core.js'></script>
+</head>
+<body>
+	<canvas height='289' width='289' id='screen' class='screen'>
+	</canvas>
+</body>
+</html>
+
+var screen,lastCommand="";
+$(document).on('ready',function() {
+	screen = new Screen('#screen');
+}).on('keydown',function(evt) {
+	if(evt.ctrlKey===true) {
+		if(evt.which===82) {
+			command();
+		}
+	}
+});
+
+function command() {
+	lastCommand = prompt("Command: ",lastCommand);
+	try {
+		eval(lastCommand);
+	}
+	catch(err) {
+		alert("Error: " + err.description);
+	}
+}
+
+function Screen(screenEl) {
+	var self = this;
+	this.sizeX = 25;
+	this.sizeY = 25;
+	this.pixelSize = 10;
+	this.pixelSpacing = 1.5;
+	this.startX = 1.5;
+	this.startY = 1.5;
+	this.screenEl = $(screenEl)[0];
+	
+	this.fillScreen = function() {
+		var screen = self.getScreen();
+		var ts=0,tc=0;
+		for(var i=self.startX;tc<self.sizeX;i+=(self.pixelSize+self.pixelSpacing)) {
+		
+			for(var x=self.startY;ts<self.sizeY;x+=(self.pixelSize+self.pixelSpacing)) {
+				screen.fillRect(i,x,self.pixelSize,self.pixelSize);
+				ts++;
+			}
+			ts=0;
+			tc++;
+		}
+		
+	}
+	
+	this.clearScreen = function() {
+		var screen = self.getScreen();
+		screen.fillStyle = "rgb(255,255,255)";
+		screen.fillRect(0,0,self.screenEl.width,self.screenEl.height);
+	}
+	
+	
+	this.getScreen = function() {
+		return self.screenEl.getContext("2d");
+	}
+}
+
+.screen {
+	border-style:solid;
+	border-width:2px;
+	border-color:black;
+}
