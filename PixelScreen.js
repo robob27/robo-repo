@@ -6,8 +6,8 @@ function PixelScreen(screenEl,initX,initY) {
 	TODO:
 	Make set methods validate new values
 	*/
-	if(this instanceof Screen===false) {
-		return new Screen(screenEl,initX,initY);
+	if(this instanceof PixelScreen===false) {
+		return new PixelScreen(screenEl,initX,initY);
 	}
 	var self = this;
 	this.onAlpha = "rgb(0,0,0)";
@@ -97,10 +97,11 @@ function PixelScreen(screenEl,initX,initY) {
 		return self;
 	}
 	this.setResolution = function(pSize,pSpacing) {
-		self.blankScreen();
+		self.blank();
 		self.setPixelSize(pSize);
 		self.setPixelSpacing(pSpacing);
 		self.setSize();
+		return self;
 	}
 	this.clear = function() {
 		for(var x=0;x<(self.getSizeY());x++) {
@@ -110,7 +111,7 @@ function PixelScreen(screenEl,initX,initY) {
 		}
 		return self;
 	}
-	this.fillScreen = function() {
+	this.fill = function() {
 		for(var x=0;x<(self.getSizeY());x++) {
 			for(var i=0;i<(self.getSizeX());i++) {
 				self.setPixel("on",i,x);
@@ -119,7 +120,7 @@ function PixelScreen(screenEl,initX,initY) {
 		return self;
 	}	
 
-	this.blankScreen = function() {
+	this.blank = function() {
 		for(var x=0;x<(self.getSizeY());x++) {
 			for(var i=0;i<(self.getSizeX());i++) {
 				self.setPixel("clear",i,x);
