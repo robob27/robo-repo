@@ -77,6 +77,11 @@ function PixelScreen(screenEl,initX,initY) {
 	this.getSizeY = function() {
 		return self.sizeY;
 	}
+	this.screenshot = function(picsEl) {
+		var img = $(self.screenEl)[0].toDataURL("img/png");
+		var imgEl = $(document.createElement('img')).attr('src',img);
+		$(picsEl).empty().append(imgEl);
+	}
 	this.setSize = function(x,y) {
 		if(typeof(x)==='undefined') {
 			x = self.getSizeX();
@@ -88,17 +93,16 @@ function PixelScreen(screenEl,initX,initY) {
 		self.setSizeY(y);
 		$(self.screenEl).attr('height',((self.getSizeY()*self.getPixelSize())+(self.getSizeY()*self.getPixelSpacing())+self.getPixelSpacing()));
 		$(self.screenEl).attr('width',((self.getSizeX()*self.getPixelSize())+(self.getSizeX()*self.getPixelSpacing())+self.getPixelSpacing()));
-		self.clearScreen();
+		self.clear();
 		return self;
 	}
 	this.setResolution = function(pSize,pSpacing) {
 		self.blankScreen();
 		self.setPixelSize(pSize);
 		self.setPixelSpacing(pSpacing);
-		self.clearScreen();
 		self.setSize();
 	}
-	this.clearScreen = function() {
+	this.clear = function() {
 		for(var x=0;x<(self.getSizeY());x++) {
 			for(var i=0;i<(self.getSizeX());i++) {
 				self.setPixel("off",i,x);
